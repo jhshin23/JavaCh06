@@ -15,8 +15,18 @@ public class Example {
 		for(String s : splitStr) System.out.println(s);
 		//4번
 		StringTokenizer st = new StringTokenizer("a=3,b=5,c=6", ",=");
-		while(st.hasMoreTokens())
-			System.out.println(st.nextToken());
+		int sum = 0;
+		while(st.hasMoreTokens()) {
+			String temp = st.nextToken();
+			System.out.println(temp);
+			try {
+				sum += Integer.parseInt(temp);
+			}
+			catch(NumberFormatException e) {
+				continue;
+			}
+		}
+		System.out.println("합은 " + sum);
 		
 		
 	}
