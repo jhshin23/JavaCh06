@@ -1,5 +1,5 @@
 package ch06;
-//Page391, P06 이론문제
+//Page391, T06
 public class WrapperCodeQuiz {
 
 	public static void main(String[] args) {

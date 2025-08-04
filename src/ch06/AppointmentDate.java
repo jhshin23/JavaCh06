@@ -1,7 +1,7 @@
 package ch06;
 
 import java.util.Calendar;
-//Page393, 이론 문제 12번
+//Page393, T12
 public class AppointmentDate {
 
 	public static void main(String[] args) {

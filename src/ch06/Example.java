@@ -2,7 +2,7 @@ package ch06;
 
 import java.util.StringTokenizer;
 
-//Page390, 이론문제 3,4번
+//Page390, T03, T04
 public class Example {
 
 	public static void main(String[] args) {

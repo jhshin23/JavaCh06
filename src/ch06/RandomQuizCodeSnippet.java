@@ -2,7 +2,7 @@ package ch06;
 
 import java.util.Random;
 
-//Page392, P11, 이론문제 11번
+//Page392, T11
 public class RandomQuizCodeSnippet {
 
 	public static void main(String[] args) {
