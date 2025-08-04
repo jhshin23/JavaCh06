@@ -28,6 +28,8 @@ public class Example {
 		}
 		System.out.println("합은 " + sum);
 		
+		str = str.concat("ㅇㅇ");
+		System.out.println(str);
 		
 	}
 
