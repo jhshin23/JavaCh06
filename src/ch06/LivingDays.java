@@ -1,7 +1,7 @@
 package ch06;
 import java.util.Calendar;
 import java.util.Scanner;
-
+//Page397, P08
 class CalcDay {
 	private final int YEAR = 0, MONTH = 1, DAY = 2;
 	private Calendar now = Calendar.getInstance();
