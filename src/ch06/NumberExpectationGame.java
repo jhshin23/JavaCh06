@@ -4,7 +4,7 @@ import java.util.Scanner;
 class PlayerExpGame {
 	private String name;
 	private int luckyNum;
-	private int resulCnt;
+	private int result;
 	private boolean isWinner = false;
 	public PlayerExpGame(String name) {
 		this.name = name;
@@ -36,31 +36,31 @@ class PlayerExpGame {
 		return name;
 	}
 	
-	public void setCnt(int[] randomNum) {
-		int LuckyNum  = getLuckyNum();
+	public void setResult(int[] randomNum) {
+		int luckyNum  = getLuckyNum();
 		int compCnt = 0;
 		for(int i = 0 ; i < randomNum.length ; i++) {
-			if(LuckyNum == randomNum[i]) compCnt++;
+			if(luckyNum == randomNum[i]) compCnt++;
 		}
-		resulCnt = compCnt;
+		result = compCnt;
 	}
 	
-	public int getCnt() {
-		return resulCnt;
+	public int getResult() {
+		return result;
 	}
 	
 	public void setIsWinner() {
 		isWinner = true;
 	}
 	
-	public boolean getIsWinner() {
+	public boolean isWinner() {
 		return isWinner;
 	}
 }
 public class NumberExpectationGame {
 	static final int MIN = 1; 
 	static final int MAX = 10; 
-	private int RANDOM_NUM_SIZE = 15; 	
+	static final int RANDOM_NUM_SIZE = 15; 	
 	private int [] randomNum = new int [RANDOM_NUM_SIZE];
 	private PlayerExpGame[] gamer;
 
@@ -98,41 +98,52 @@ public class NumberExpectationGame {
 	}
 	
 	public boolean judge() {
-		int minCnt = gamer[0].getCnt();
-		int leftOneIndex = 0, leftGamer = 0;
+		int minCnt = RANDOM_NUM_SIZE + 1;
 		for(PlayerExpGame p : gamer) {
-			if(!p.getIsWinner()) minCnt = Math.min(minCnt, p.getCnt());
+			if(!p.isWinner()) minCnt = Math.min(minCnt, p.getResult());
 		}
 		for(int i = 0 ; i < gamer.length ; i++) {
-			if(!gamer[i].getIsWinner()) {
-				if(minCnt == gamer[i].getCnt()) {
-				System.out.println("[" + gamer[i].getName() + "] 맞춘 개수: " + gamer[i].getCnt());
+			if(!(gamer[i].isWinner())) {
+				if(minCnt == gamer[i].getResult()) {
+				System.out.println("[" + gamer[i].getName() + "] 맞춘 개수: " + gamer[i].getResult());
 				continue;
 				}
 				else {
-					System.out.println("[" + gamer[i].getName() + "] 맞춘 개수: " + gamer[i].getCnt());
+					System.out.println("[" + gamer[i].getName() + "] 맞춘 개수: " + gamer[i].getResult());
 					gamer[i].setIsWinner();
 				}
 			}
 		}
 		
 		System.out.print("현재 패자들 : ");
-		for(int i = 0 ; i < gamer.length ; i++) {
-			if(!gamer[i].getIsWinner()) {
-				System.out.print(gamer[i].getName() + " ");
-				leftOneIndex = i;
-				leftGamer++;
-			}
-		}
+		for(int i = 0 ; i < gamer.length ; i++) if(!gamer[i].isWinner()) System.out.print(gamer[i].getName() + " ");
 		System.out.println();
 		
-		if(leftGamer == 1) {
-			System.out.println("최종 패자는" + gamer[leftOneIndex].getName() + "입니다");
+		if(isGameOver()) {
+			System.out.print("최종 패자는 ");
+			for(PlayerExpGame p : gamer) {
+				if(!(p.isWinner())) System.out.print(p.getName()+ " ");
+			}
+			System.out.println("입니다");
 			return true;
 		}
 		else return false;
 		
 	}
+	
+	private boolean isGameOver() {
+		for (int i = 0 ; i < gamer.length ; i++) {
+			if(gamer[i].isWinner()) continue;
+			else {
+				for (int j = i+1 ; j < gamer.length ; j++) {
+					if(!gamer[j].isWinner()) 
+						if(gamer[i].getLuckyNum() != gamer[j].getLuckyNum()) return false;
+				}
+			}
+		}
+		return true; //만약 패자가 하나 초과면 그들이 같은 번호를 고른 경우이기 때문에 공동 패배(이기면 공동 승리)
+	}
+	
 	
 	public void run(Scanner scanner) {
 		setPlayer(scanner);
@@ -142,12 +153,12 @@ public class NumberExpectationGame {
 		
 		if(inputEnter(scanner)) makeRandomNum();
 		
-		for(int i = 0 ; i < gamer.length ; i++) gamer[i].setCnt(randomNum);
+		for(int i = 0 ; i < gamer.length ; i++) gamer[i].setResult(randomNum);
 		
 		while (true) {
 			if(judge()) return;
 			if(inputEnter(scanner)) makeRandomNum();			
-			for(int i = 0 ; i < gamer.length ; i++) gamer[i].setCnt(randomNum);
+			for(int i = 0 ; i < gamer.length ; i++) gamer[i].setResult(randomNum);
 		}
 	}
 	
